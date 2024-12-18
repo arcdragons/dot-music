@@ -18,6 +18,7 @@ let height = 1000
 let time = 0
 let x = 0
 let y = 0
+let hz = 0
 let mouse = { x: 0, y: 0 }
 let ctx: any
 
@@ -79,11 +80,14 @@ function play() {
 //   you can use other AudioParams here
 //   amp.gain.setValueAtTime(0.9, amp.context.currentTime)
  
- 
-  oscillator.type = 'triangle'
   oscillator.connect(amp).connect(audioContext.destination)
+  oscillator.frequency.value = hz
+  oscillator.frequency.setValueAtTime(0, 1)
+  oscillator.type = "triangle"
+  oscillator.connect(audioContext.destination)
   oscillator.start()
-  oscillator.stop(audioContext.currentTime + 1)
+  oscillator.connect(audioContext.destination)
+  oscillator.start()
  
 }
 
@@ -340,10 +344,6 @@ function bouge(ev: MouseEvent) {
           eventsc.push({ point: { x: width*0, y: height}, time, duration: 2000 })
           eventsc.push({ point: { x: width, y: height*0}, time, duration: 2000 })
           eventsc.push({ point: { x: width*0.5, y: height*0.5}, time, duration: 2000 })
-          eventsc.push({ point: { x: width*0, y: height*0.5}, time, duration: 2000 })
-          eventsc.push({ point: { x: width, y: height*0.5}, time, duration: 2000 })
-          eventsc.push({ point: { x: width*0.5, y: height}, time, duration: 2000 })
-          eventsc.push({ point: { x: width*0.5, y: height*0}, time, duration: 2000 })
         // Faire quelque chose pour la touche "bas droit" pressée.
         if(oscillator && amp) {
         oscillator.frequency.value = 163.5
